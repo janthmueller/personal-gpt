@@ -113,8 +113,7 @@ def get_chunks(path, r, file_types, file_types_bool, loader_types, text_splitter
     ]
     if path_type == "file":
         if len(file_types_to_load) > 1:
-            raise ValueError(
-                f"Cannot load multiple file types from a single file.")
+            raise ValueError(f"Cannot load multiple file types from a single file.")
         elif not file_types_to_load:
             file_type = path.split(".")[-1]
             print(f"Detect file type: Determined file type to be {file_type}.")
@@ -128,8 +127,7 @@ def get_chunks(path, r, file_types, file_types_bool, loader_types, text_splitter
         print(f"Loading file {path}.")
         loader = loader_type(path)
         docs = loader.load_and_split()
-        chunks = text_splitter[file_types.index(
-            file_type)].split_documents(docs)
+        chunks = text_splitter[file_types.index(file_type)].split_documents(docs)
     else:
         if not file_types_to_load:
             raise ValueError(f"Must specify at least one file type to load.")
@@ -147,8 +145,7 @@ def get_chunks(path, r, file_types, file_types_bool, loader_types, text_splitter
             docs = DirectoryLoader(
                 path, glob=glob, loader_cls=loader_cls, recursive=r
             ).load_and_split()
-            chunks += text_splitter[file_types.index(
-                file_type)].split_documents(docs)
+            chunks += text_splitter[file_types.index(file_type)].split_documents(docs)
 
     return chunks
 
@@ -171,19 +168,14 @@ if __name__ == "__main__":
     embedder_cls_name = args.embedding_class
     embedder_kwargs = args.embedding_kwargs
 
-    print(
-        f"Loading embedder {embedder_cls_name} with kwargs {embedder_kwargs}.")
+    print(f"Loading embedder {embedder_cls_name} with kwargs {embedder_kwargs}.")
     embedder = globals()[embedder_cls_name](**embedder_kwargs)
     print(f"Embedding {len(chunks)} chunks...")
     collection = db.get_langchain_collection(
         name=args.collection_name, embedder=embedder
     )
     collection.add_documents(chunks)
-    print(
-        f"Added {len(chunks)} embedded chunks to collection {args.collection_name}.")
+    print(f"Added {len(chunks)} embedded chunks to collection {args.collection_name}.")
     print(
         f"Collection {args.collection_name} contains {collection._collection.count()} elements."
     )
-
-# TODO: rename private keys to secret keys
-# TODO: add query and chatbot
