@@ -7,3 +7,7 @@ Create secret_keys.py in the root directory with your own keys e.g.:
 ```python
 OPENAI_API_KEY = "your_key"
 ```
+
+Relevant links:
+https://www.youtube.com/watch?v=wUAUdEw5oxM
+(lost the rest of the links, will maybe add them later)
